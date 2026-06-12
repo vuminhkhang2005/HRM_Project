@@ -1,25 +1,25 @@
 # HRM Project
 
-HRM Project la he thong quan ly nhan su duoc xay dung bang Spring Boot. Ung dung cung cap giao dien HTML tinh, REST API va cac module nghiep vu cho quan ly nhan vien, phong ban, cham cong, nghi phep, bang luong, danh gia hieu suat, thong bao va tro ly AI noi bo.
+HRM Project is a human resource management system built with Spring Boot. The application provides a static HTML interface, REST APIs, and business modules for employee management, departments, attendance, leave requests, payroll, performance reviews, notifications, and an internal AI HR assistant.
 
-Ma nguon chinh nam trong thu muc `HumanResourceManagementWebsite`.
+The main application source code is located in `HumanResourceManagementWebsite`.
 
-## Tinh nang chinh
+## Main Features
 
-- Xac thuc nguoi dung bang JWT access token va refresh token.
-- Quan ly tai khoan theo vai tro `ADMIN`, `HR`, `MANAGER`, `EMPLOYEE`.
-- Quan ly nhan vien, phong ban, quan he quan ly va anh dai dien.
-- Cham cong vao/ra, lich su cham cong, dong ngay cham cong tu dong va dong bo ngay nghi phep.
-- Quan ly don nghi phep, phe duyet hoac tu choi don nghi.
-- Tao bang luong theo thang, tinh khau tru, trang thai thanh toan va xuat Excel.
-- Danh gia hieu suat nhan vien theo nam/quy, submit va approve review.
-- Dashboard tong hop so lieu nhan su, phong ban, cham cong va nghi phep.
-- He thong thong bao noi bo va tuy chon gui email SMTP.
-- Tro ly AI HR su dung Gemini, co guardrail, audit log, policy knowledge va rate limit.
-- Xuat Excel cho nhan vien, cham cong va bang luong bang Apache POI.
-- Giao dien web tinh cho cac man hinh login, dashboard, employees, departments, attendance, leave, payroll, performance, profile, admin users va AI assistant.
+- User authentication with JWT access tokens and refresh tokens.
+- Role-based access control for `ADMIN`, `HR`, `MANAGER`, and `EMPLOYEE`.
+- Employee, department, manager assignment, and avatar management.
+- Check-in/check-out attendance tracking, attendance history, automatic daily closing, and leave synchronization.
+- Leave request creation, approval, and rejection workflows.
+- Monthly payroll generation, deductions, payment status tracking, and Excel export.
+- Employee performance reviews by year/quarter, including submit and approval flows.
+- HR dashboard with employee, department, attendance, and leave statistics.
+- Internal notification system with optional SMTP email delivery.
+- Gemini-powered HR AI assistant with guardrails, audit logging, policy knowledge, and rate limiting.
+- Excel exports for employees, attendance, and payroll using Apache POI.
+- Static web pages for login, dashboard, employees, departments, attendance, leave, payroll, performance, profile, admin users, and the AI assistant.
 
-## Cong nghe su dung
+## Tech Stack
 
 - Java 17
 - Spring Boot 4.0.3
@@ -27,7 +27,7 @@ Ma nguon chinh nam trong thu muc `HumanResourceManagementWebsite`.
 - Spring Security
 - Spring Data JPA / Hibernate
 - MySQL 8
-- H2 cho test
+- H2 for tests
 - Maven Wrapper
 - JJWT
 - Lombok
@@ -36,7 +36,7 @@ Ma nguon chinh nam trong thu muc `HumanResourceManagementWebsite`.
 - Gemini API
 - Docker
 
-## Cau truc thu muc
+## Project Structure
 
 ```text
 .
@@ -67,64 +67,68 @@ Ma nguon chinh nam trong thu muc `HumanResourceManagementWebsite`.
         `-- test
 ```
 
-## Yeu cau moi truong
+## Requirements
 
-- JDK 17 tro len de build va chay bang Maven.
-- MySQL 8.0 tro len.
-- Maven Wrapper da co san trong project, khong bat buoc cai Maven rieng.
-- Docker neu muon build image container.
-- Gemini API key va SMTP account neu bat tinh nang AI/email.
+- JDK 17 or newer to build and run the application with Maven.
+- MySQL 8.0 or newer.
+- Maven is optional because the project includes Maven Wrapper.
+- Docker if you want to build and run a container image.
+- Gemini API key and SMTP account if AI/email features are enabled.
 
-## Cau hinh
+## Configuration
 
-File cau hinh mac dinh: `HumanResourceManagementWebsite/src/main/resources/application.properties`.
+Default configuration file:
 
-Nen ghi de cac cau hinh nhay cam bang bien moi truong khi chay local hoac deploy:
+```text
+HumanResourceManagementWebsite/src/main/resources/application.properties
+```
 
-| Bien moi truong | Y nghia |
+For local development or deployment, override sensitive values with environment variables:
+
+| Environment variable | Description |
 | --- | --- |
-| `PORT` | Port chay server, mac dinh `8080`. |
-| `JWT_SECRET` | Secret ky JWT, nen dat chuoi dai va rieng cho moi moi truong. |
-| `JWT_EXPIRATION_MS` | Thoi gian song access token. |
-| `REFRESH_TOKEN_MAX_AGE_SECONDS` | Thoi gian song refresh token. |
-| `REFRESH_TOKEN_SECURE` | Bat co secure cho refresh token cookie khi chay HTTPS. |
-| `MAIL_SEND_ENABLED` | Bat/tat gui email. |
-| `MAIL_HOST`, `MAIL_PORT` | Cau hinh SMTP server. |
-| `MAIL_USERNAME`, `MAIL_PASSWORD` | Tai khoan SMTP. |
-| `MAIL_FROM` | Dia chi email hien thi nguoi gui. |
-| `GEMINI_API_KEY` | API key cho Gemini. |
-| `GEMINI_MODEL_NAME` | Model Gemini su dung. |
-| `AI_GEMINI_ENABLED` | Bat/tat tinh nang goi Gemini. |
-| `AI_CHAT_MAX_MSG_PER_MIN` | Gioi han so tin nhan AI moi phut. |
+| `PORT` | Server port. Default: `8080`. |
+| `JWT_SECRET` | JWT signing secret. Use a long, environment-specific value. |
+| `JWT_EXPIRATION_MS` | Access token lifetime. |
+| `REFRESH_TOKEN_MAX_AGE_SECONDS` | Refresh token lifetime. |
+| `REFRESH_TOKEN_SECURE` | Enables the secure flag for refresh token cookies when using HTTPS. |
+| `MAIL_SEND_ENABLED` | Enables or disables email delivery. |
+| `MAIL_HOST`, `MAIL_PORT` | SMTP server configuration. |
+| `MAIL_USERNAME`, `MAIL_PASSWORD` | SMTP credentials. |
+| `MAIL_FROM` | Sender email address. |
+| `GEMINI_API_KEY` | Gemini API key. |
+| `GEMINI_MODEL_NAME` | Gemini model name. |
+| `AI_GEMINI_ENABLED` | Enables or disables Gemini calls. |
+| `AI_CHAT_MAX_MSG_PER_MIN` | AI chat rate limit per minute. |
 
-Luu y: khong nen su dung secret mac dinh cho production. Hay tao file `.env` rieng hoac cau hinh bien moi truong tren nen tang deploy.
+Do not use default secrets in production. Configure secrets through environment variables, a local `.env` file, or your deployment platform.
 
-## Khoi tao database
+## Database Setup
 
-1. Tao schema va du lieu mau ban dau:
+1. Create the schema and initial sample data:
 
 ```bash
 mysql -u root -p < HumanResourceManagementWebsite/hrm_db.sql
 ```
 
-2. Nap them seed data mo rong neu can:
+2. Load additional seed data if needed:
 
 ```bash
 mysql -u root -p hrm_db < HumanResourceManagementWebsite/seed_data.sql
 ```
 
-3. Kiem tra ket noi MySQL trong `application.properties` hoac ghi de bang cau hinh moi truong/command line.
+3. Check the MySQL connection in `application.properties` or override it through environment variables/command-line arguments.
 
-Project dang cau hinh database local mac dinh:
+The project is configured for this local database by default:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/hrm_db
 spring.datasource.username=sa
 ```
 
-Neu MySQL cua ban dung user/password khac, hay doi cau hinh truoc khi chay.
+If your MySQL instance uses a different user or password, update the configuration before running the application.
 
-## Chay project local
+## Run Locally
 
 ### Windows
 
@@ -140,56 +144,56 @@ cd HumanResourceManagementWebsite
 ./mvnw spring-boot:run
 ```
 
-Sau khi server khoi dong, truy cap:
+After the server starts, open:
 
-- Trang chu: `http://localhost:8080`
-- Dang nhap: `http://localhost:8080/login`
+- Home: `http://localhost:8080`
+- Login: `http://localhost:8080/login`
 - Dashboard: `http://localhost:8080/overview`
-- Tro ly AI: `http://localhost:8080/assistant.html`
+- AI Assistant: `http://localhost:8080/assistant.html`
 
-## Tai khoan mau
+## Sample Accounts
 
-Sau khi import `hrm_db.sql`, co the dang nhap bang cac tai khoan sau. Mat khau mac dinh cho tat ca tai khoan mau la `123456`.
+After importing `hrm_db.sql`, you can log in with the following accounts. The default password for all sample accounts is `123456`.
 
-| Username | Vai tro |
+| Username | Role |
 | --- | --- |
 | `admin` | `ADMIN` |
 | `hr1` | `HR` |
 | `manager1` | `MANAGER` |
 | `employee1` | `EMPLOYEE` |
 
-Sau khi import them `seed_data.sql`, project co them nhieu tai khoan nhan vien theo email, vi du:
+After importing `seed_data.sql`, the project also includes more employee accounts by email, for example:
 
 - `lan.nguyen@hrm.com`
 - `minh.hoang@hrm.com`
 - `long.phan@hrm.com`
 
-## API chinh
+## Main APIs
 
-| Module | Endpoint goc | Mo ta |
+| Module | Base endpoint | Description |
 | --- | --- | --- |
-| Auth | `/api/auth` | Dang nhap, refresh token, logout. |
-| Dashboard | `/api/dashboard` | Thong ke tong quan HRM. |
-| Employees | `/api/employees` | CRUD nhan vien, upload avatar, export Excel. |
-| Departments | `/api/departments` | CRUD phong ban va danh sach nhan vien theo phong ban. |
-| Attendance | `/api/attendance` | Check-in, check-out, lich su, export cham cong. |
-| Leave | `/api/leave` | Tao don nghi, xem don, phe duyet, tu choi. |
-| Payroll | `/api/payroll` | Xem bang luong, tao bang luong thang, export Excel. |
-| Performance Reviews | `/api/performance-reviews` | Quan ly review hieu suat, submit va approve. |
-| Profile | `/api/profile` | Xem/cap nhat ho so ca nhan va doi mat khau. |
-| Notifications | `/api/notifications` | Lay thong bao va danh dau da doc. |
-| Admin Users | `/api/admin/users` | Quan ly tai khoan nguoi dung, khoa/mo khoa, role, mat khau. |
-| AI Assistant | `/api/ai/chat` | Chat voi tro ly AI HR. |
+| Auth | `/api/auth` | Login, refresh token, and logout. |
+| Dashboard | `/api/dashboard` | HRM summary statistics. |
+| Employees | `/api/employees` | Employee CRUD, avatar upload, and Excel export. |
+| Departments | `/api/departments` | Department CRUD and employees by department. |
+| Attendance | `/api/attendance` | Check-in, check-out, history, and attendance export. |
+| Leave | `/api/leave` | Leave request creation, listing, approval, and rejection. |
+| Payroll | `/api/payroll` | Payroll listing, monthly generation, and Excel export. |
+| Performance Reviews | `/api/performance-reviews` | Performance review management, submit, and approval. |
+| Profile | `/api/profile` | Current user profile, profile update, and password change. |
+| Notifications | `/api/notifications` | User notifications and mark-as-read actions. |
+| Admin Users | `/api/admin/users` | User account management, lock/unlock, role, username, and password updates. |
+| AI Assistant | `/api/ai/chat` | Chat endpoint for the HR AI assistant. |
 
-Ngoai cac API public nhu login/status, phan lon endpoint yeu cau header:
+Except for public endpoints such as login/status, most APIs require this header:
 
 ```http
 Authorization: Bearer <access-token>
 ```
 
-## Test
+## Tests
 
-Chay test bang Maven Wrapper:
+Run tests with Maven Wrapper:
 
 ### Windows
 
@@ -205,36 +209,45 @@ cd HumanResourceManagementWebsite
 ./mvnw test
 ```
 
-Test profile su dung H2 in-memory database va tat cac tac vu phu thuoc moi truong nhu gui email/Gemini.
+The test profile uses an H2 in-memory database and disables environment-dependent behavior such as email delivery and Gemini calls.
 
-## Build va Docker
+## Build and Docker
 
-Build file JAR:
+Build the JAR:
+
+### Windows
+
+```powershell
+cd HumanResourceManagementWebsite
+.\mvnw.cmd clean package
+```
+
+### macOS/Linux
 
 ```bash
 cd HumanResourceManagementWebsite
 ./mvnw clean package
 ```
 
-Build Docker image:
+Build the Docker image from the `HumanResourceManagementWebsite` directory:
 
 ```bash
 docker build -t hrm-system .
 ```
 
-Chay container:
+Run the container:
 
 ```bash
 docker run --name hrm-system -p 8080:8080 --env-file .env hrm-system
 ```
 
-Khi chay Docker, dam bao container co the ket noi den MySQL va cac bien moi truong trong `.env` da duoc cau hinh dung.
+When running with Docker, make sure the container can connect to MySQL and that all required values in `.env` are configured correctly.
 
-## Ghi chu trien khai
+## Deployment Notes
 
-- `spring.jpa.hibernate.ddl-auto=none`, nen database can duoc khoi tao bang script SQL truoc khi chay app.
-- Tinh nang dong ngay cham cong duoc bat mac dinh qua `hrm.attendance.daily-closing.enabled=true`.
-- Thu muc upload avatar mac dinh la `uploads/avatars`.
-- Neu chay production, can cau hinh secret rieng, tat secret mac dinh va khong commit file `.env`.
-- Neu bat email, hay dat `MAIL_SEND_ENABLED=true` va cau hinh SMTP hop le.
-- Neu tat AI, dat `AI_GEMINI_ENABLED=false`.
+- `spring.jpa.hibernate.ddl-auto=none`, so the database must be initialized with SQL scripts before the application starts.
+- Daily attendance closing is enabled by default with `hrm.attendance.daily-closing.enabled=true`.
+- The default avatar upload directory is `uploads/avatars`.
+- For production, configure environment-specific secrets and do not commit `.env` files.
+- To enable email delivery, set `MAIL_SEND_ENABLED=true` and provide valid SMTP settings.
+- To disable AI features, set `AI_GEMINI_ENABLED=false`.
